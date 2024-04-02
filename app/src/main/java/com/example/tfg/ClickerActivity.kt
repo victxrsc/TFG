@@ -1,4 +1,4 @@
-package com.example.clicker1
+package com.example.tfg
 
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -28,7 +28,7 @@ class ClickerActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.clicker_activity)
+        setContentView(R.layout.activity_clicker)
         initComponent()
         initListeners()
     }
@@ -81,6 +81,7 @@ class ClickerActivity : ComponentActivity() {
         }
     }
 
+
     private val handler = Handler()
     private val longPressRunnable = object : Runnable {
         override fun run() {
@@ -96,6 +97,9 @@ class ClickerActivity : ComponentActivity() {
             }
         }
     }
+
+
+
 
     private fun startTimer() {
         pointsCount = 0
