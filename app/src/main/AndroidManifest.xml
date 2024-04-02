@@ -13,7 +13,7 @@
         android:theme="@style/Theme.TFG"
         tools:targetApi="31">
         <activity
-            android:name="com.example.clicker1.ClickerActivity"
+            android:name="com.example.tfg.ClickerActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.TFG">
