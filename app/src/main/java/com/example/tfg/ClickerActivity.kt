@@ -81,7 +81,6 @@ class ClickerActivity : ComponentActivity() {
         }
     }
 
-
     private val handler = Handler()
     private val longPressRunnable = object : Runnable {
         override fun run() {
@@ -97,9 +96,6 @@ class ClickerActivity : ComponentActivity() {
             }
         }
     }
-
-
-
 
     private fun startTimer() {
         pointsCount = 0
