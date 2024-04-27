@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "802175098991",
+    "project_id": "tfggame-fc21d",
+    "storage_bucket": "tfggame-fc21d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:802175098991:android:3c7a870ca0735b96f4ad9a",
+        "android_client_info": {
+          "package_name": "com.example.tfg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmRYa7iqvVtZlfdzFv0sr_3lUFkqtbnBs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

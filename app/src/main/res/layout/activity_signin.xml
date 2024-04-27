@@ -1,23 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/forest_background"
-    tools:ignore="ExtraText">
+    android:background="@drawable/forest_background">
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|center"
-        android:gravity="center"
-        android:text="Login"
+        android:layout_marginTop="40dp"
+        android:text="Sign In"
         android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,65 +26,78 @@
         android:src="@drawable/banana_points_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
     <View
-        android:id="@+id/vUserRectangle"
+        android:id="@+id/vEmailRectangle"
         android:layout_width="300dp"
         android:layout_height="35dp"
-        android:alpha="0.30"
+        android:layout_marginTop="20dp"
         android:background="@color/teal_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="299dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@id/ivCircle" />
 
     <EditText
-        android:id="@+id/etUser"
+        android:id="@+id/etEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="User"
+        android:hint="Email"
         android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/vUserRectangle"
-        app:layout_constraintEnd_toEndOf="@+id/vUserRectangle"
-        app:layout_constraintStart_toStartOf="@+id/vUserRectangle"
-        app:layout_constraintTop_toTopOf="@+id/vUserRectangle" />
+        android:textColorHint="#80FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@id/vEmailRectangle"
+        app:layout_constraintEnd_toEndOf="@id/vEmailRectangle"
+        app:layout_constraintStart_toStartOf="@id/vEmailRectangle"
+        app:layout_constraintTop_toTopOf="@id/vEmailRectangle" />
 
     <View
         android:id="@+id/vPassRectangle"
         android:layout_width="300dp"
         android:layout_height="35dp"
-        android:alpha="0.30"
+        android:layout_marginTop="16dp"
         android:background="@color/teal_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="423dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@id/vEmailRectangle" />
 
     <EditText
-        android:id="@+id/etNumSeg"
+        android:id="@+id/etPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Password"
+        android:inputType="textPassword"
         android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/vPassRectangle"
-        app:layout_constraintEnd_toEndOf="@+id/vPassRectangle"
-        app:layout_constraintStart_toStartOf="@+id/vPassRectangle"
-        app:layout_constraintTop_toTopOf="@+id/vPassRectangle" />
-        " />
+        android:textColorHint="#80FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@id/vPassRectangle"
+        app:layout_constraintEnd_toEndOf="@id/vPassRectangle"
+        app:layout_constraintStart_toStartOf="@id/vPassRectangle"
+        app:layout_constraintTop_toTopOf="@id/vPassRectangle" />
 
     <Button
-        android:id="@+id/boton"
-        android:layout_width="183dp"
+        android:id="@+id/btSignIn"
+        android:layout_width="150dp"
         android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:background="@color/teal_700"
+        android:text="Sign In"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/btLogIn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etPass" />
+
+    <Button
+        android:id="@+id/btLogIn"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
         android:background="@color/teal_700"
         android:text="Log In"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etNumSeg" />
+        app:layout_constraintStart_toEndOf="@id/btSignIn"
+        app:layout_constraintTop_toBottomOf="@id/etPass" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
