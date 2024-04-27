@@ -12,16 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TFG"
         tools:targetApi="31">
+
         <activity
-            android:name="com.example.tfg.ClickerActivity"
+            android:name="com.example.tfg.LoginActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.TFG">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.example.tfg.ClickerActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TFG">
         </activity>
     </application>
 
