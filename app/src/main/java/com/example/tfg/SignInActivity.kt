@@ -23,7 +23,6 @@ class SignInActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
 
-        // Inicializar las vistas
         tvTitle = findViewById(R.id.tvTitle)
         ivCircle = findViewById(R.id.ivCircle)
         etEmail = findViewById(R.id.etEmail)
@@ -33,7 +32,6 @@ class SignInActivity : ComponentActivity() {
 
         setup()
     }
-
 
     private fun setup() {
         btSignIn.setOnClickListener {
