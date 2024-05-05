@@ -1,16 +1,25 @@
 package com.example.tfg
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 
+
+@Suppress("DEPRECATION")
 class SignInActivity : ComponentActivity() {
+    private val GOOGLE_SIGN_IN = 100
 
     private lateinit var tvTitle: TextView
     private lateinit var ivCircle: ImageView
@@ -18,6 +27,7 @@ class SignInActivity : ComponentActivity() {
     private lateinit var etPass: EditText
     private lateinit var btSignIn: Button
     private lateinit var btLogIn: Button
+    private lateinit var btGoogle: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,67 +39,105 @@ class SignInActivity : ComponentActivity() {
         etPass = findViewById(R.id.etPass)
         btSignIn = findViewById(R.id.btSignIn)
         btLogIn = findViewById(R.id.btLogIn)
+        btGoogle = findViewById(R.id.btGoogle)
 
+
+        //Setup
         setup()
+        session()
+
+    }
+
+    private fun session() {
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
+        val email = prefs.getString("email", null)
+        val provider = prefs.getString("provider", null)
+        if (email != null && provider != null) {
+            showWelcome(email, ProviderType.valueOf(provider))
+        }
     }
 
     private fun setup() {
+        title = "Authentication"
+
         btSignIn.setOnClickListener {
             if (etEmail.text.isNotEmpty() && etPass.text.isNotEmpty()) {
-                val email = etEmail.text.toString()
-                val password = etPass.text.toString()
-
                 FirebaseAuth.getInstance()
-                    .createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            showWelcome(email)
+                    .createUserWithEmailAndPassword(etEmail.text.toString(), etPass.text.toString())
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            showWelcome(it.result?.user?.email ?: "", ProviderType.EMAIL)
                         } else {
                             showAlert()
                         }
                     }
-            } else {
-                showAlert("The fields cannot be empty")
             }
         }
-
         btLogIn.setOnClickListener {
-            if (etEmail.text.isNotEmpty() && etPass.text.toString().isNotEmpty()) {
-                val email = etEmail.text.toString()
-                val password = etPass.text.toString()
-
+            if (etEmail.text.isNotEmpty() && etPass.text.isNotEmpty()) {
                 FirebaseAuth.getInstance()
-                    .signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            showGame()
+                    .signInWithEmailAndPassword(etEmail.text.toString(), etPass.text.toString())
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            showWelcome(it.result?.user?.email ?: "", ProviderType.EMAIL)
                         } else {
-                            showAlert("Log In Error")
+                            showAlert()
                         }
                     }
-            } else {
-                showAlert("The fields cannot be empty")
             }
+        }
+        btGoogle.setOnClickListener {
+            //Config
+            val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+            val googleClient = GoogleSignIn.getClient(this, googleConf)
+            googleClient.signOut()
+            startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
         }
     }
 
-    private fun showAlert(message: String = "Authentication Error") {
+    private fun showAlert() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage(message)
+        builder.setMessage("Authentication Error")
         builder.setPositiveButton("Accept", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
 
-    private fun showWelcome(email: String) {
-        val welcomeIntent = Intent(this, WelcomeActivity::class.java)
-        welcomeIntent.putExtra("USER_EMAIL", email)
+    private fun showWelcome(email: String, provider: ProviderType) {
+        val welcomeIntent = Intent(this, WelcomeActivity::class.java).apply {
+            putExtra("email", email)
+            putExtra("provider", provider.name)
+        }
         startActivity(welcomeIntent)
+
     }
 
-    private fun showGame() {
-        val gameIntent = Intent(this, ClickerActivity::class.java)
-        startActivity(gameIntent)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == GOOGLE_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+
+                if (account != null) {
+                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                    FirebaseAuth.getInstance().signInWithCredential(credential)
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                showWelcome(account.email ?: "", ProviderType.GOOGLE)
+                            } else {
+                                showAlert()
+                            }
+                        }
+
+                }
+            } catch (e: ApiException) {
+                showAlert()
+            }
+        }
     }
 }

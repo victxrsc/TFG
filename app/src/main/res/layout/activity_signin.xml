@@ -99,5 +99,19 @@
         app:layout_constraintStart_toEndOf="@id/btSignIn"
         app:layout_constraintTop_toBottomOf="@id/etPass" />
 
+    <Button
+        android:id="@+id/btGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="225dp"
+        android:background="@color/white"
+        android:drawableStart="@drawable/google_icon"
+        android:layout_marginTop="20dp"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btSignIn" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
