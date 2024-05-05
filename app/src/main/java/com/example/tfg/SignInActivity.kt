@@ -23,6 +23,7 @@ class SignInActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
 
+        // Inicializar las vistas
         tvTitle = findViewById(R.id.tvTitle)
         ivCircle = findViewById(R.id.ivCircle)
         etEmail = findViewById(R.id.etEmail)
@@ -32,6 +33,7 @@ class SignInActivity : ComponentActivity() {
 
         setup()
     }
+
 
     private fun setup() {
         btSignIn.setOnClickListener {
@@ -43,15 +45,18 @@ class SignInActivity : ComponentActivity() {
                     .createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-
+                            showWelcome(email)
                         } else {
                             showAlert()
                         }
                     }
+            } else {
+                showAlert("The fields cannot be empty")
             }
         }
-        btLogIn.setOnClickListener() {
-            if (etEmail.text.isNotEmpty() && etPass.text.isNotEmpty()) {
+
+        btLogIn.setOnClickListener {
+            if (etEmail.text.isNotEmpty() && etPass.text.toString().isNotEmpty()) {
                 val email = etEmail.text.toString()
                 val password = etPass.text.toString()
 
@@ -61,30 +66,32 @@ class SignInActivity : ComponentActivity() {
                         if (task.isSuccessful) {
                             showGame()
                         } else {
-                            showAlert()
+                            showAlert("Log In Error")
                         }
                     }
+            } else {
+                showAlert("The fields cannot be empty")
             }
         }
     }
 
-    private fun showAlert() {
+    private fun showAlert(message: String = "Authentication Error") {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("Error de autenticación")
-        builder.setPositiveButton("Aceptar", null)
+        builder.setMessage(message)
+        builder.setPositiveButton("Accept", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
 
-    private fun showWelcome() {
-        val homeIntent = Intent(this, WelcomeActivity::class.java)
-        startActivity(homeIntent)
+    private fun showWelcome(email: String) {
+        val welcomeIntent = Intent(this, WelcomeActivity::class.java)
+        welcomeIntent.putExtra("USER_EMAIL", email)
+        startActivity(welcomeIntent)
     }
 
     private fun showGame() {
         val gameIntent = Intent(this, ClickerActivity::class.java)
         startActivity(gameIntent)
     }
-
 }
