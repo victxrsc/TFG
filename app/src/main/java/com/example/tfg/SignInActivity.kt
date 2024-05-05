@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import com.google.firebase.auth.FirebaseAuth
 
-class LoginActivity : ComponentActivity() {
+class SignInActivity : ComponentActivity() {
 
     private lateinit var tvTitle: TextView
     private lateinit var ivCircle: ImageView
@@ -59,7 +59,7 @@ class LoginActivity : ComponentActivity() {
                     .signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            showHome()
+                            showGame()
                         } else {
                             showAlert()
                         }
@@ -77,9 +77,14 @@ class LoginActivity : ComponentActivity() {
         dialog.show()
     }
 
-    private fun showHome() {
-        val homeIntent = Intent(this, ClickerActivity::class.java)
+    private fun showWelcome() {
+        val homeIntent = Intent(this, WelcomeActivity::class.java)
         startActivity(homeIntent)
+    }
+
+    private fun showGame() {
+        val gameIntent = Intent(this, ClickerActivity::class.java)
+        startActivity(gameIntent)
     }
 
 }
