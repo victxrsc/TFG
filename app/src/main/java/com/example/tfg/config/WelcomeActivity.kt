@@ -1,4 +1,4 @@
-package com.example.tfg
+package com.example.tfg.config
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,7 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Button
 import androidx.activity.ComponentActivity
-import com.google.firebase.Firebase
+import com.example.tfg.gameplay.ClickerActivity
+import com.example.tfg.R
 import com.google.firebase.auth.FirebaseAuth
 
 enum class ProviderType {
