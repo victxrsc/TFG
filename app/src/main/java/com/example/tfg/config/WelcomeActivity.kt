@@ -65,7 +65,8 @@ class WelcomeActivity : ComponentActivity() {
                         hashMapOf(
                             "provider" to provider,
                             "totalPoints" to 0,
-                            "record" to 0
+                            "record" to 0,
+                            "gamesPlayed" to 0
                         )
                     )
                 }

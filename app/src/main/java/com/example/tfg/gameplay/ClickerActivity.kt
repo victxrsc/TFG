@@ -11,6 +11,7 @@ import androidx.activity.ComponentActivity
 import android.os.Handler
 import com.example.tfg.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ClickerActivity : ComponentActivity() {
@@ -112,6 +113,7 @@ class ClickerActivity : ComponentActivity() {
                 btClick.setImageResource(R.drawable.monkey1a_icon)
                 tvTotalPoints.text = "Total Points: $totalPoints"
                 storePoints(totalPoints)
+                updateGamesPlayed()
 
                 // Verificar si la puntuación de la última partida supera el récord
                 if (pointsCount > record) {
@@ -162,6 +164,13 @@ class ClickerActivity : ComponentActivity() {
         userEmail?.let { email ->
             val userDocumentRef = database.collection("players").document(email)
             userDocumentRef.update("record", record)
+        }
+    }
+    private fun updateGamesPlayed(){
+        val userEmail = FirebaseAuth.getInstance().currentUser?.email
+        userEmail?.let { email ->
+            val userDocumentRef = database.collection("players").document(email)
+            userDocumentRef.update("gamesPlayed", FieldValue.increment(1))
         }
     }
 }
