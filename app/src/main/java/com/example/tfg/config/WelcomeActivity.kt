@@ -11,6 +11,7 @@ import androidx.activity.ComponentActivity
 import com.example.tfg.gameplay.ClickerActivity
 import com.example.tfg.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 enum class ProviderType {
     EMAIL,
@@ -27,7 +28,8 @@ class WelcomeActivity : ComponentActivity() {
     private lateinit var btPlay: Button
     private lateinit var btLogOut: Button
 
-    @SuppressLint("MissingInflatedId")
+    private val database = FirebaseFirestore.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
@@ -39,35 +41,53 @@ class WelcomeActivity : ComponentActivity() {
         btPlay = findViewById(R.id.btPlay)
         btLogOut = findViewById(R.id.btLogOut)
 
-        //Setup
+        // Setup
         val bundle = intent.extras
         val email = bundle?.getString("email")
         val provider = bundle?.getString("provider")
 
-        setup(email?:"", provider?: "")
+        setup(email ?: "", provider ?: "")
 
-        //Data Storing
+        // Data Storing
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
         prefs.putString("email", email)
         prefs.putString("provider", provider)
         prefs.apply()
 
+        // Database Storing
+        val userEmail = FirebaseAuth.getInstance().currentUser?.email
+
+        userEmail?.let { email ->
+            val userDocumentRef = database.collection("players").document(email)
+            userDocumentRef.get().addOnSuccessListener { documentSnapshot ->
+                if (!documentSnapshot.exists()) {
+                    database.collection("players").document(email).set(
+                        hashMapOf(
+                            "provider" to provider,
+                            "totalPoints" to 0,
+                            "record" to 0
+                        )
+                    )
+                }
+            }
+        }
     }
 
     private fun setup(email: String, provider: String) {
         title = "Welcome"
         tvWelcome.text = "Welcome $email"
         tvProvider.text = "Provider used $provider"
-        btLogOut.setOnClickListener{
+        btLogOut.setOnClickListener {
             //Data Removing
-            val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+            val prefs =
+                getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
             prefs.clear()
             prefs.apply()
 
             FirebaseAuth.getInstance().signOut()
             onBackPressed()
         }
-        btPlay.setOnClickListener{
+        btPlay.setOnClickListener {
             val intent = Intent(this, ClickerActivity::class.java)
             startActivity(intent)
         }

@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import android.os.Handler
 import com.example.tfg.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ClickerActivity : ComponentActivity() {
     private lateinit var tvTitle: TextView
@@ -22,15 +24,19 @@ class ClickerActivity : ComponentActivity() {
 
     private var pointsCount: Int = 0
     private var totalPoints: Int = 0
+    private var record: Int = 0 // Variable para el récord
     private var timer: CountDownTimer? = null
     private var isTimerRunning: Boolean = false
     private var buttonPressedTime: Long = 0
+
+    private val database = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clicker)
         initComponent()
         initListeners()
+        loadPlayerPoints()
     }
 
     private fun initComponent() {
@@ -53,26 +59,16 @@ class ClickerActivity : ComponentActivity() {
 
         btClick.setOnTouchListener { _, event ->
             when (event.action) {
-                //Actions while btClick is pressed
                 MotionEvent.ACTION_DOWN -> {
-                    //Count pressed time
                     buttonPressedTime = System.currentTimeMillis()
-                    //Start runnable after 3 seconds
                     handler.postDelayed(longPressRunnable, 3000)
-                    //Change Image to B al press and hold
                     btClick.setImageResource(R.drawable.monkey1b_icon)
-                    //Increase Points one by one when the Image is touched
                     pointsCount++
-                    //Update the points on the Text
                     tvPoints.text = pointsCount.toString()
                     true
                 }
-                //Actions while btClick is released
                 MotionEvent.ACTION_UP -> {
-                    //Stop the Runnable
                     handler.removeCallbacks(longPressRunnable)
-                    val pressDuration = System.currentTimeMillis() - buttonPressedTime
-                    //Change Image to A again after release the Click
                     btClick.setImageResource(R.drawable.monkey1a_icon)
                     true
                 }
@@ -85,12 +81,9 @@ class ClickerActivity : ComponentActivity() {
     private val longPressRunnable = object : Runnable {
         override fun run() {
             val pressDuration = System.currentTimeMillis() - buttonPressedTime
-            //Change Image to C if pressed 3 seconds until pressed 6 seconds
             if (pressDuration >= 3000 && pressDuration < 6000) {
                 btClick.setImageResource(R.drawable.monkey1c_icon)
                 handler.postDelayed(this, 3000)
-
-                //Change Image to D if pressed 6 seconds or more
             } else if (pressDuration >= 6000) {
                 btClick.setImageResource(R.drawable.monkey1d_icon)
             }
@@ -118,9 +111,57 @@ class ClickerActivity : ComponentActivity() {
                 totalPoints += pointsCount
                 btClick.setImageResource(R.drawable.monkey1a_icon)
                 tvTotalPoints.text = "Total Points: $totalPoints"
+                storePoints(totalPoints)
+
+                // Verificar si la puntuación de la última partida supera el récord
+                if (pointsCount > record) {
+                    record = pointsCount // Actualizar el récord
+                    updateRecordInDatabase(record)
+                }
             }
         }
         isTimerRunning = true
         timer?.start()
+    }
+
+    private fun storePoints(points: Int) {
+        val userEmail = FirebaseAuth.getInstance().currentUser?.email
+        userEmail?.let { email ->
+            val userDocumentRef = database.collection("players").document(email)
+            userDocumentRef.update("totalPoints", points)
+        }
+    }
+
+    private fun loadPlayerPoints() {
+        val userEmail = FirebaseAuth.getInstance().currentUser?.email
+        userEmail?.let { email ->
+            val userDocumentRef = database.collection("players").document(email)
+            userDocumentRef.get()
+                .addOnSuccessListener { documentSnapshot ->
+                    if (documentSnapshot.exists() && documentSnapshot.contains("totalPoints")) {
+                        val totalPoints = documentSnapshot.getLong("totalPoints")
+                        totalPoints?.let {
+                            this.totalPoints = it.toInt()
+                            tvTotalPoints.text = "Total Points: $totalPoints"
+                        }
+                    }
+
+                    // Cargar el récord si existe en el documento
+                    if (documentSnapshot.exists() && documentSnapshot.contains("record")) {
+                        val record = documentSnapshot.getLong("record")
+                        record?.let {
+                            this.record = it.toInt()
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun updateRecordInDatabase(record: Int) {
+        val userEmail = FirebaseAuth.getInstance().currentUser?.email
+        userEmail?.let { email ->
+            val userDocumentRef = database.collection("players").document(email)
+            userDocumentRef.update("record", record)
+        }
     }
 }
