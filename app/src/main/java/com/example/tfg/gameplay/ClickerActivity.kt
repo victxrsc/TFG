@@ -94,7 +94,6 @@ class ClickerActivity : ComponentActivity() {
 
     }
 
-
     private fun updateTimer(selectedDuration: Int) {
         gameDurationInSeconds = selectedDuration
         tvTimer.text = gameDurationInSeconds.toString()
@@ -140,7 +139,6 @@ class ClickerActivity : ComponentActivity() {
                 // Verificar si la puntuación de la última partida supera el récord
                 if (pointsCount > record) {
                     record = pointsCount // Actualizar el récord
-                    updateRecordInDatabase(record)
                 }
             }
         }
@@ -156,6 +154,19 @@ class ClickerActivity : ComponentActivity() {
         }
     }
 
+    // En updateRecordInDatabase
+    private fun updateRecordInDatabase(record: Int) {
+        val userEmail = FirebaseAuth.getInstance().currentUser?.email
+        userEmail?.let { email ->
+            val userDocumentRef = database.collection("players").document(email)
+            val recordData = hashMapOf(
+                "record" to record,
+            )
+            userDocumentRef.update(recordData as Map<String, Any>)
+        }
+    }
+
+    // En loadPlayerPoints
     private fun loadPlayerPoints() {
         val userEmail = FirebaseAuth.getInstance().currentUser?.email
         userEmail?.let { email ->
@@ -170,22 +181,16 @@ class ClickerActivity : ComponentActivity() {
                         }
                     }
 
-                    // Cargar el récord si existe en el documento
+                    // Cargar el récord y la modalidad si existen en el documento
                     if (documentSnapshot.exists() && documentSnapshot.contains("record")) {
                         val record = documentSnapshot.getLong("record")
+                        val modeOrdinal = documentSnapshot.getLong("mode")
                         record?.let {
                             this.record = it.toInt()
                         }
+
                     }
                 }
-        }
-    }
-
-    private fun updateRecordInDatabase(record: Int) {
-        val userEmail = FirebaseAuth.getInstance().currentUser?.email
-        userEmail?.let { email ->
-            val userDocumentRef = database.collection("players").document(email)
-            userDocumentRef.update("record", record)
         }
     }
 
@@ -196,5 +201,4 @@ class ClickerActivity : ComponentActivity() {
             userDocumentRef.update("gamesPlayed", FieldValue.increment(1))
         }
     }
-
 }
