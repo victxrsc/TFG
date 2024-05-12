@@ -6,7 +6,7 @@
     android:background="@drawable/forest_background">
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -26,7 +26,7 @@
         android:src="@drawable/mainlogo_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@id/tvOptions" />
 
     <View
         android:id="@+id/vEmailRectangle"

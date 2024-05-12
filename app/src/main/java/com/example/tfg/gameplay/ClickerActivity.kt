@@ -1,5 +1,6 @@
 package com.example.tfg.gameplay
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.MotionEvent
@@ -10,25 +11,28 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import android.os.Handler
 import com.example.tfg.R
+import com.example.tfg.config.OptionsActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ClickerActivity : ComponentActivity() {
-    private lateinit var tvTitle: TextView
+    private lateinit var tvMonkeyClicker: TextView
     private lateinit var tvTimer: TextView
-    private lateinit var btClick: ImageButton
     private lateinit var tvPoints: TextView
-    private lateinit var ivPoints: ImageView
-    private lateinit var btStart: Button
     private lateinit var tvTotalPoints: TextView
+    private lateinit var btClick: ImageButton
+    private lateinit var ivPoints: ImageView
+    private lateinit var ivOptions: ImageView
+    private lateinit var btStart: Button
 
     private var pointsCount: Int = 0
     private var totalPoints: Int = 0
-    private var record: Int = 0 // Variable para el récord
+    private var record: Int = 0
     private var timer: CountDownTimer? = null
     private var isTimerRunning: Boolean = false
     private var buttonPressedTime: Long = 0
+    private var gameDurationInSeconds: Int = 15
 
     private val database = FirebaseFirestore.getInstance()
 
@@ -41,15 +45,16 @@ class ClickerActivity : ComponentActivity() {
     }
 
     private fun initComponent() {
-        tvTitle = findViewById(R.id.tvTitle)
+        tvMonkeyClicker = findViewById(R.id.tvMonkeyClicker)
         tvTimer = findViewById(R.id.tvTimer)
-        btClick = findViewById(R.id.btClick)
         tvPoints = findViewById(R.id.tvPoints)
-        ivPoints = findViewById(R.id.ivPoints)
-        btStart = findViewById(R.id.btStart)
         tvTotalPoints = findViewById(R.id.tvTotalPoints)
-        tvTimer.text = "15"
+        tvTimer.text = gameDurationInSeconds.toString()
+        btClick = findViewById(R.id.btClick)
+        btStart = findViewById(R.id.btStart)
         btClick.isEnabled = false
+        ivPoints = findViewById(R.id.ivPoints)
+        ivOptions = findViewById(R.id.ivOptions)
     }
 
     private fun initListeners() {
@@ -68,14 +73,27 @@ class ClickerActivity : ComponentActivity() {
                     tvPoints.text = pointsCount.toString()
                     true
                 }
+
                 MotionEvent.ACTION_UP -> {
                     handler.removeCallbacks(longPressRunnable)
                     btClick.setImageResource(R.drawable.monkey1a_icon)
                     true
                 }
+
                 else -> false
             }
         }
+        ivOptions.setOnClickListener {
+            val intent = Intent(this, OptionsActivity::class.java)
+            startActivity(intent)
+        }
+
+    }
+
+
+    private fun updateTimer(selectedDuration: Int) {
+        gameDurationInSeconds = selectedDuration
+        tvTimer.text = gameDurationInSeconds.toString()
     }
 
     private val handler = Handler()
@@ -94,9 +112,9 @@ class ClickerActivity : ComponentActivity() {
     private fun startTimer() {
         pointsCount = 0
         tvPoints.text = "0"
-        tvTimer.text = "15"
+        tvTimer.text = gameDurationInSeconds.toString()
         timer?.cancel()
-        timer = object : CountDownTimer(15000, 1000) {
+        timer = object : CountDownTimer(gameDurationInSeconds * 1000L, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val seconds = millisUntilFinished / 1000
                 if (seconds > 0) {
@@ -166,11 +184,13 @@ class ClickerActivity : ComponentActivity() {
             userDocumentRef.update("record", record)
         }
     }
-    private fun updateGamesPlayed(){
+
+    private fun updateGamesPlayed() {
         val userEmail = FirebaseAuth.getInstance().currentUser?.email
         userEmail?.let { email ->
             val userDocumentRef = database.collection("players").document(email)
             userDocumentRef.update("gamesPlayed", FieldValue.increment(1))
         }
     }
+
 }

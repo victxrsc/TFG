@@ -9,7 +9,7 @@
     android:background="@drawable/forest_background">
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -27,7 +27,7 @@
         android:layout_height="250dp"
         android:layout_marginTop="40dp"
         android:src="@drawable/welcome_icon"
-        app:layout_constraintBottom_toTopOf="@+id/tvTitle"
+        app:layout_constraintBottom_toTopOf="@+id/tvOptions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,14 +57,14 @@
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btPlay"
+        app:layout_constraintBottom_toTopOf="@+id/btAccept"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvWelcome"
         app:layout_constraintVertical_bias="0.135" />
 
     <Button
-        android:id="@+id/btPlay"
+        android:id="@+id/btAccept"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/teal_700"
@@ -86,7 +86,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.432"
-        app:layout_constraintStart_toEndOf="@+id/btPlay"
+        app:layout_constraintStart_toEndOf="@+id/btAccept"
         app:layout_constraintTop_toBottomOf="@+id/tvWelcome" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

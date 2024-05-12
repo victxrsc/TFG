@@ -33,7 +33,7 @@ class SignInActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
 
-        tvTitle = findViewById(R.id.tvTitle)
+        tvTitle = findViewById(R.id.tvOptions)
         ivCircle = findViewById(R.id.ivCircle)
         etEmail = findViewById(R.id.etEmail)
         etPass = findViewById(R.id.etPass)

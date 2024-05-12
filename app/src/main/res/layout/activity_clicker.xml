@@ -8,7 +8,7 @@
     tools:context=".gameplay.ClickerActivity">
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvMonkeyClicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -20,6 +20,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/ivOptions"
+        android:layout_width="65dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/options_icon"
+        app:layout_constraintEnd_toStartOf="@+id/tvTimer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMonkeyClicker" />
     <TextView
         android:id="@+id/tvTimer"
         android:layout_width="wrap_content"
@@ -31,7 +40,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvMonkeyClicker" />
 
     <ImageButton
         android:id="@+id/btClick"
@@ -97,5 +106,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPoints" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

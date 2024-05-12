@@ -1,6 +1,5 @@
 package com.example.tfg.config
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -34,11 +33,11 @@ class WelcomeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
 
-        tvTitle = findViewById(R.id.tvTitle)
+        tvTitle = findViewById(R.id.tvOptions)
         ivCircle = findViewById(R.id.ivCircle)
         tvWelcome = findViewById(R.id.tvWelcome)
         tvProvider = findViewById(R.id.tvProvider)
-        btPlay = findViewById(R.id.btPlay)
+        btPlay = findViewById(R.id.btAccept)
         btLogOut = findViewById(R.id.btLogOut)
 
         // Setup
