@@ -1,10 +1,12 @@
 package com.example.tfg.config
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import com.example.tfg.R
+import com.example.tfg.gameplay.ClickerActivity
 
 
 class OptionsActivity : AppCompatActivity() {
@@ -44,6 +46,18 @@ class OptionsActivity : AppCompatActivity() {
             tv5Segs.setTextColor(android.graphics.Color.WHITE)
             tv10Segs.setTextColor(android.graphics.Color.WHITE)
             tv15Segs.setTextColor(android.graphics.Color.RED)
+        }
+
+        // Definir el OnClickListener para btApply
+        btApply.setOnClickListener {
+            val intent = Intent(this, ClickerActivity::class.java)
+            val selectedTimer = when {
+                tv5Segs.currentTextColor == android.graphics.Color.RED -> 5
+                tv10Segs.currentTextColor == android.graphics.Color.RED -> 10
+                else -> 15
+            }
+            intent.putExtra("selectedTimer", selectedTimer)
+            startActivity(intent)
         }
     }
 }
