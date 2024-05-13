@@ -43,6 +43,7 @@ class ClickerActivity : ComponentActivity() {
         initListeners()
         loadPlayerPoints()
 
+
         val selectedTimer = intent.getIntExtra("selectedTimer", 15)
         gameDurationInSeconds = selectedTimer
         tvTimer.text = gameDurationInSeconds.toString()

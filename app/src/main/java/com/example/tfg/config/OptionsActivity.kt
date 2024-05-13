@@ -13,6 +13,7 @@ class OptionsActivity : AppCompatActivity() {
     private lateinit var tv5Segs: TextView
     private lateinit var tv10Segs: TextView
     private lateinit var tv15Segs: TextView
+    private lateinit var btScoreboards: Button
     private lateinit var btApply: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +23,7 @@ class OptionsActivity : AppCompatActivity() {
         tv5Segs = findViewById(R.id.tv5Segs)
         tv10Segs = findViewById(R.id.tv10Segs)
         tv15Segs = findViewById(R.id.tv15Segs)
+        btScoreboards = findViewById(R.id.btScoreboards)
         btApply = findViewById(R.id.btApply)
 
         // Establecer el color predeterminado de tv15Segs a rojo
