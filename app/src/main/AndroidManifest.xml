@@ -32,12 +32,12 @@
         <activity
             android:name=".config.OptionsActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
         <activity
             android:name=".gameplay.ShopActivity"
             android:exported="false"
-            android:theme="@style/Theme.TFG"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
         <activity
             android:name=".gameplay.ClickerActivity"

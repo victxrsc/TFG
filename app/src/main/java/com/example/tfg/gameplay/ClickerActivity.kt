@@ -24,6 +24,7 @@ class ClickerActivity : ComponentActivity() {
     private lateinit var btClick: ImageButton
     private lateinit var ivPoints: ImageView
     private lateinit var ivOptions: ImageView
+    private lateinit var ivShop: ImageView
     private lateinit var btStart: Button
 
     private var pointsCount: Int = 0
@@ -60,6 +61,7 @@ class ClickerActivity : ComponentActivity() {
         btClick.isEnabled = false
         ivPoints = findViewById(R.id.ivPoints)
         ivOptions = findViewById(R.id.ivOptions)
+        ivShop = findViewById(R.id.ivShop)
     }
 
     private fun initListeners() {
@@ -92,7 +94,13 @@ class ClickerActivity : ComponentActivity() {
             val intent = Intent(this, OptionsActivity::class.java)
             startActivity(intent)
         }
+        ivShop.setOnClickListener {
+            ivShop.setOnClickListener {
+                val intent = Intent(this, ShopActivity::class.java)
+                startActivity(intent)
+            }
 
+        }
     }
 
     private fun updateTimer(selectedDuration: Int) {

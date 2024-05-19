@@ -5,6 +5,188 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gameplay.ShopActivity">
+    tools:context=".gameplay.ShopActivity"
+    android:background="@drawable/jungle2_background">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvSkins"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/cvPowerUps"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="Skins"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvPowerUps"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/cvBackgrounds"
+            app:layout_constraintStart_toEndOf="@+id/cvSkins"
+            app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="Power Ups"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvBackgrounds"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cvPowerUps"
+            app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="Backgrounds"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Existing Skins layout here -->
+        <TextView
+            android:id="@+id/tvShop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:text="Shop"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tvSkins"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSkins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Skins"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvShop" />
+
+        <ImageView
+            android:id="@+id/ivMonkey"
+            android:layout_width="128dp"
+            android:layout_height="144dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/monkey1a_shop_icon"
+            app:layout_constraintEnd_toStartOf="@+id/ivRaccoon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSkins" />
+
+        <ImageView
+            android:id="@+id/ivRaccoon"
+            android:layout_width="109dp"
+            android:layout_height="147dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/raccoon1a_shop_icon"
+            app:layout_constraintEnd_toStartOf="@+id/ivKoala"
+            app:layout_constraintStart_toEndOf="@+id/ivMonkey"
+            app:layout_constraintTop_toBottomOf="@+id/tvSkins" />
+
+        <ImageView
+            android:id="@+id/ivKoala"
+            android:layout_width="128dp"
+            android:layout_height="146dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/koala1a_shop_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivRaccoon"
+            app:layout_constraintTop_toBottomOf="@+id/tvSkins" />
+
+        <TextView
+            android:id="@+id/tvMonkey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Purchased"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/ivMonkey"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/ivMonkey"
+            app:layout_constraintTop_toBottomOf="@+id/ivMonkey" />
+
+        <TextView
+            android:id="@+id/tvRaccoon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3500"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/ivRaccoon"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/ivRaccoon"
+            app:layout_constraintTop_toBottomOf="@+id/ivRaccoon" />
+
+        <TextView
+            android:id="@+id/tvKoala"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5000"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/ivKoala"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/ivKoala"
+            app:layout_constraintTop_toBottomOf="@+id/ivKoala" />
+
+        <ImageView
+            android:id="@+id/ivCoinRaccoon"
+            android:layout_width="44dp"
+            android:layout_height="42dp"
+            android:src="@drawable/banana_points_icon"
+            app:layout_constraintStart_toEndOf="@+id/tvRaccoon"
+            app:layout_constraintTop_toTopOf="@+id/tvRaccoon"
+            app:layout_constraintBottom_toBottomOf="@+id/tvRaccoon"
+            android:layout_marginStart="-5dp" />
+
+        <ImageView
+            android:id="@+id/ivCoinKoala"
+            android:layout_width="44dp"
+            android:layout_height="42dp"
+            android:src="@drawable/banana_points_icon"
+            app:layout_constraintStart_toEndOf="@+id/tvKoala"
+            app:layout_constraintTop_toTopOf="@+id/tvKoala"
+            app:layout_constraintBottom_toBottomOf="@+id/tvKoala"
+            android:layout_marginStart="-5dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
