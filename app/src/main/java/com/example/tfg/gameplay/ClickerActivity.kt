@@ -12,6 +12,7 @@ import androidx.activity.ComponentActivity
 import android.os.Handler
 import com.example.tfg.R
 import com.example.tfg.config.OptionsActivity
+import com.example.tfg.shop.ShopActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
