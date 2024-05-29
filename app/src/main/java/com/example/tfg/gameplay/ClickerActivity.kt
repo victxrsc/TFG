@@ -1,5 +1,6 @@
 package com.example.tfg.gameplay
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -10,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import android.os.Handler
+import android.util.Log
 import com.example.tfg.R
 import com.example.tfg.config.OptionsActivity
 import com.example.tfg.shop.ShopActivity
@@ -146,9 +148,9 @@ class ClickerActivity : ComponentActivity() {
                 storePoints(totalPoints)
                 updateGamesPlayed()
 
-                // Verificar si la puntuación de la última partida supera el récord
                 if (pointsCount > record) {
                     record = pointsCount // Actualizar el récord
+                    updateRecordInDatabase(record) // Actualizar el récord en la base de datos
                 }
             }
         }
@@ -164,15 +166,18 @@ class ClickerActivity : ComponentActivity() {
         }
     }
 
-    // En updateRecordInDatabase
     private fun updateRecordInDatabase(record: Int) {
         val userEmail = FirebaseAuth.getInstance().currentUser?.email
         userEmail?.let { email ->
             val userDocumentRef = database.collection("players").document(email)
-            val recordData = hashMapOf(
-                "record" to record,
-            )
-            userDocumentRef.update(recordData as Map<String, Any>)
+            userDocumentRef.update("record", record)
+                .addOnSuccessListener {
+                    // Registro actualizado con éxito
+                }
+                .addOnFailureListener { e ->
+                    // Error al actualizar el registro
+                    Log.e(TAG, "Error updating record: $e")
+                }
         }
     }
 

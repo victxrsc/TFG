@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import com.example.tfg.R
 import com.example.tfg.gameplay.ClickerActivity
+import com.example.tfg.gameplay.ScoreboardActivity
 
 class OptionsActivity : AppCompatActivity() {
     private lateinit var tv5Segs: TextView
@@ -52,6 +53,11 @@ class OptionsActivity : AppCompatActivity() {
             intent.putExtra("selectedTimer", selectedTimer)
             startActivity(intent)
         }
+        btScoreboards.setOnClickListener {
+            val intent = Intent(this, ScoreboardActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun handleSelection(textView: TextView) {
