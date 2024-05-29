@@ -8,7 +8,6 @@ import com.example.tfg.R
 
 class ShopActivity : AppCompatActivity() {
 
-    // Declarar todas las vistas como variables
     private lateinit var tvShop: TextView
     private lateinit var tvSkins: TextView
     private lateinit var ivMonkey: ImageView
@@ -30,11 +29,15 @@ class ShopActivity : AppCompatActivity() {
     private lateinit var tvBackground2: TextView
     private lateinit var tvBackground3: TextView
 
+    private var selectedImageView: ImageView? = null
+    private val originalScale = 1.0f
+    private val selectedScale = 1.2f
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop)
 
-        // Inicializar todas las vistas
+        // Asociar vistas con variables
         tvShop = findViewById(R.id.tvShop)
         tvSkins = findViewById(R.id.tvSkins)
         ivMonkey = findViewById(R.id.ivMonkey)
@@ -55,5 +58,28 @@ class ShopActivity : AppCompatActivity() {
         tvBackground1 = findViewById(R.id.tvBackground1)
         tvBackground2 = findViewById(R.id.tvBackground2)
         tvBackground3 = findViewById(R.id.tvBackground3)
+
+        // Configurar listeners para los ImageView
+        ivMonkey.setOnClickListener { handleSelection(ivMonkey) }
+        ivRaccoon.setOnClickListener { handleSelection(ivRaccoon) }
+        ivKoala.setOnClickListener { handleSelection(ivKoala) }
+        ivX2.setOnClickListener { handleSelection(ivX2) }
+        ivX3.setOnClickListener { handleSelection(ivX3) }
+        ivBackground1.setOnClickListener { handleSelection(ivBackground1) }
+        ivBackground2.setOnClickListener { handleSelection(ivBackground2) }
+        ivBackground3.setOnClickListener { handleSelection(ivBackground3) }
+    }
+
+    private fun handleSelection(imageView: ImageView) {
+        // Restaurar tamaño original del ImageView previamente seleccionado
+        selectedImageView?.scaleX = originalScale
+        selectedImageView?.scaleY = originalScale
+
+        // Agrandar el ImageView seleccionado
+        imageView.scaleX = selectedScale
+        imageView.scaleY = selectedScale
+
+        // Guardar el ImageView seleccionado
+        selectedImageView = imageView
     }
 }

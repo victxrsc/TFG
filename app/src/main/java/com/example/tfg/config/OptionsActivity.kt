@@ -8,13 +8,16 @@ import android.widget.Button
 import com.example.tfg.R
 import com.example.tfg.gameplay.ClickerActivity
 
-
 class OptionsActivity : AppCompatActivity() {
     private lateinit var tv5Segs: TextView
     private lateinit var tv10Segs: TextView
     private lateinit var tv15Segs: TextView
     private lateinit var btScoreboards: Button
     private lateinit var btApply: Button
+
+    private var selectedTextView: TextView? = null
+    private val originalScale = 1.0f
+    private val selectedScale = 1.2f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,40 +29,43 @@ class OptionsActivity : AppCompatActivity() {
         btScoreboards = findViewById(R.id.btScoreboards)
         btApply = findViewById(R.id.btApply)
 
-        // Establecer el color predeterminado de tv15Segs a rojo
-        tv15Segs.setTextColor(android.graphics.Color.RED)
+        // Establecer el TextView predeterminado seleccionado
+        handleSelection(tv15Segs)
 
         // Definir el OnClickListener para tv5Segs
-        tv5Segs.setOnClickListener {
-            tv5Segs.setTextColor(android.graphics.Color.RED)
-            tv10Segs.setTextColor(android.graphics.Color.WHITE)
-            tv15Segs.setTextColor(android.graphics.Color.WHITE)
-        }
+        tv5Segs.setOnClickListener { handleSelection(tv5Segs) }
 
         // Definir el OnClickListener para tv10Segs
-        tv10Segs.setOnClickListener {
-            tv5Segs.setTextColor(android.graphics.Color.WHITE)
-            tv10Segs.setTextColor(android.graphics.Color.RED)
-            tv15Segs.setTextColor(android.graphics.Color.WHITE)
-        }
+        tv10Segs.setOnClickListener { handleSelection(tv10Segs) }
 
         // Definir el OnClickListener para tv15Segs
-        tv15Segs.setOnClickListener {
-            tv5Segs.setTextColor(android.graphics.Color.WHITE)
-            tv10Segs.setTextColor(android.graphics.Color.WHITE)
-            tv15Segs.setTextColor(android.graphics.Color.RED)
-        }
+        tv15Segs.setOnClickListener { handleSelection(tv15Segs) }
 
         // Definir el OnClickListener para btApply
         btApply.setOnClickListener {
             val intent = Intent(this, ClickerActivity::class.java)
-            val selectedTimer = when {
-                tv5Segs.currentTextColor == android.graphics.Color.RED -> 5
-                tv10Segs.currentTextColor == android.graphics.Color.RED -> 10
+            val selectedTimer = when (selectedTextView) {
+                tv5Segs -> 5
+                tv10Segs -> 10
                 else -> 15
             }
             intent.putExtra("selectedTimer", selectedTimer)
             startActivity(intent)
         }
+    }
+
+    private fun handleSelection(textView: TextView) {
+        // Restaurar tamaño original del TextView previamente seleccionado
+        selectedTextView?.apply {
+            scaleX = originalScale
+            scaleY = originalScale
+        }
+
+        // Agrandar el TextView seleccionado
+        textView.scaleX = selectedScale
+        textView.scaleY = selectedScale
+
+        // Guardar el TextView seleccionado
+        selectedTextView = textView
     }
 }
