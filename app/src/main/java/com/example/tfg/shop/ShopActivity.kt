@@ -5,6 +5,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tfg.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ShopActivity : AppCompatActivity() {
 
@@ -28,10 +30,14 @@ class ShopActivity : AppCompatActivity() {
     private lateinit var tvBackground1: TextView
     private lateinit var tvBackground2: TextView
     private lateinit var tvBackground3: TextView
+    private lateinit var tvPoints: TextView
 
     private var selectedImageView: ImageView? = null
     private val originalScale = 1.0f
     private val selectedScale = 1.2f
+
+    // Firebase
+    private val database = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +64,7 @@ class ShopActivity : AppCompatActivity() {
         tvBackground1 = findViewById(R.id.tvBackground1)
         tvBackground2 = findViewById(R.id.tvBackground2)
         tvBackground3 = findViewById(R.id.tvBackground3)
+        tvPoints = findViewById(R.id.tvPoints)
 
         // Configurar listeners para los ImageView
         ivMonkey.setOnClickListener { handleSelection(ivMonkey) }
@@ -68,6 +75,9 @@ class ShopActivity : AppCompatActivity() {
         ivBackground1.setOnClickListener { handleSelection(ivBackground1) }
         ivBackground2.setOnClickListener { handleSelection(ivBackground2) }
         ivBackground3.setOnClickListener { handleSelection(ivBackground3) }
+
+        // Cargar los puntos del jugador
+        loadPlayerPoints()
     }
 
     private fun handleSelection(imageView: ImageView) {
@@ -81,5 +91,30 @@ class ShopActivity : AppCompatActivity() {
 
         // Guardar el ImageView seleccionado
         selectedImageView = imageView
+    }
+
+    private fun loadPlayerPoints() {
+        // Obtiene el email del usuario actualmente autenticado
+        val userEmail = FirebaseAuth.getInstance().currentUser?.email
+        userEmail?.let { email ->
+            // Obtiene la referencia al documento del jugador
+            val userDocumentRef = database.collection("players").document(email)
+            userDocumentRef.get()
+                .addOnSuccessListener { documentSnapshot ->
+                    // Verifica si el documento existe y contiene el campo "totalPoints"
+                    if (documentSnapshot.exists() && documentSnapshot.contains("totalPoints")) {
+                        // Obtiene el valor de los puntos totales del jugador
+                        val totalPoints = documentSnapshot.getLong("totalPoints")
+                        totalPoints?.let {
+                            // Actualiza el TextView con el valor de los puntos del jugador
+                            tvPoints.text = "Points: $totalPoints"
+                        }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    // Maneja cualquier error al cargar los puntos del jugador
+                    // Aquí puedes mostrar un mensaje de error o realizar otras acciones según sea necesario
+                }
+        }
     }
 }

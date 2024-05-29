@@ -34,6 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvShop"
+        app:layout_constraintBottom_toTopOf="@id/ivRaccoon"
         tools:layout_editor_absoluteY="69dp" />
 
     <ImageView
@@ -238,6 +239,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvBackground2"
         app:layout_constraintTop_toBottomOf="@id/ivBackground3" />
+
+    <Button
+        android:id="@+id/btBuy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buy"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@color/teal_700"
+        app:layout_constraintBottom_toTopOf="@+id/ivKoala"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvShop"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Points"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/ivMonkey"
+        app:layout_constraintEnd_toStartOf="@+id/tvShop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

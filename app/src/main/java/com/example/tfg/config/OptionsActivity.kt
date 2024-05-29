@@ -18,7 +18,7 @@ class OptionsActivity : AppCompatActivity() {
 
     private var selectedTextView: TextView? = null
     private val originalScale = 1.0f
-    private val selectedScale = 1.2f
+    private val selectedScale = 1.35f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
