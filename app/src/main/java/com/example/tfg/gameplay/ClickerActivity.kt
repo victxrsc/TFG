@@ -149,8 +149,8 @@ class ClickerActivity : ComponentActivity() {
                 updateGamesPlayed()
 
                 if (pointsCount > record) {
-                    record = pointsCount // Actualizar el récord
-                    updateRecordInDatabase(record) // Actualizar el récord en la base de datos
+                    record = pointsCount
+                    updateRecordInDatabase(record)
                 }
             }
         }
@@ -172,16 +172,13 @@ class ClickerActivity : ComponentActivity() {
             val userDocumentRef = database.collection("players").document(email)
             userDocumentRef.update("record", record)
                 .addOnSuccessListener {
-                    // Registro actualizado con éxito
                 }
                 .addOnFailureListener { e ->
-                    // Error al actualizar el registro
                     Log.e(TAG, "Error updating record: $e")
                 }
         }
     }
 
-    // En loadPlayerPoints
     private fun loadPlayerPoints() {
         val userEmail = FirebaseAuth.getInstance().currentUser?.email
         userEmail?.let { email ->
@@ -196,7 +193,6 @@ class ClickerActivity : ComponentActivity() {
                         }
                     }
 
-                    // Cargar el récord y la modalidad si existen en el documento
                     if (documentSnapshot.exists() && documentSnapshot.contains("record")) {
                         val record = documentSnapshot.getLong("record")
                         val modeOrdinal = documentSnapshot.getLong("mode")

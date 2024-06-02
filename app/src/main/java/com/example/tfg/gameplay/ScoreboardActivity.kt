@@ -14,7 +14,7 @@ class ScoreboardActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var scoreboardAdapter: ScoreboardAdapter
-    private val firestore = FirebaseFirestore.getInstance()
+    private val database = FirebaseFirestore.getInstance()
     private val playerScores = mutableListOf<PlayerScore>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,15 +30,15 @@ class ScoreboardActivity : AppCompatActivity() {
     }
 
     private fun loadPlayerScores() {
-        firestore.collection("players")
+        database.collection("players")
             .orderBy("record", com.google.firebase.firestore.Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
                 playerScores.clear()
                 for (document in result) {
-                    val email = document.id // Obtener el ID del documento, que debería ser el correo electrónico
+                    val email = document.id
                     val score = document.getLong("record")?.toInt() ?: 0
-                    playerScores.add(PlayerScore(email, score)) // Usar el correo electrónico como identificador
+                    playerScores.add(PlayerScore(email, score))
                 }
                 scoreboardAdapter.notifyDataSetChanged()
             }

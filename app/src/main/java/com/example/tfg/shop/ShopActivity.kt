@@ -14,6 +14,31 @@ import com.google.firebase.firestore.FirebaseFirestore
 class ShopActivity : AppCompatActivity() {
 
     private lateinit var tvPoints: TextView
+    private lateinit var tvShop: TextView
+    private lateinit var tvSkins: TextView
+    private lateinit var tvPowerUps: TextView
+    private lateinit var tvBackgrounds: TextView
+
+    private lateinit var ivMonkey: ImageView
+    private lateinit var ivRaccoon: ImageView
+    private lateinit var ivKoala: ImageView
+    private lateinit var ivX2: ImageView
+    private lateinit var ivX3: ImageView
+    private lateinit var ivBackground1: ImageView
+    private lateinit var ivBackground2: ImageView
+    private lateinit var ivBackground3: ImageView
+
+    private lateinit var tvMonkey: TextView
+    private lateinit var tvRaccoon: TextView
+    private lateinit var tvKoala: TextView
+    private lateinit var tvX2: TextView
+    private lateinit var tvX3: TextView
+    private lateinit var tvBackground1: TextView
+    private lateinit var tvBackground2: TextView
+    private lateinit var tvBackground3: TextView
+
+    private lateinit var btBuy: Button
+
     private var updatedPoints: Long? = null
     private var selectedImageView: ImageView? = null
     private val database = FirebaseFirestore.getInstance()
@@ -22,19 +47,41 @@ class ShopActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop)
 
-        tvPoints = findViewById(R.id.tvPoints)
+        initComponent()
+        initListeners()
 
         loadPlayerData()
+    }
 
-        val ivMonkey = findViewById<ImageView>(R.id.ivMonkey)
-        val ivRaccoon = findViewById<ImageView>(R.id.ivRaccoon)
-        val ivKoala = findViewById<ImageView>(R.id.ivKoala)
-        val ivX2 = findViewById<ImageView>(R.id.ivX2)
-        val ivX3 = findViewById<ImageView>(R.id.ivX3)
-        val ivBackground1 = findViewById<ImageView>(R.id.ivBackground1)
-        val ivBackground2 = findViewById<ImageView>(R.id.ivBackground2)
-        val ivBackground3 = findViewById<ImageView>(R.id.ivBackground3)
+    private fun initComponent() {
+        tvPoints = findViewById(R.id.tvPoints)
+        tvShop = findViewById(R.id.tvShop)
+        tvSkins = findViewById(R.id.tvSkins)
+        tvPowerUps = findViewById(R.id.tvPowerUps)
+        tvBackgrounds = findViewById(R.id.tvBackgrounds)
 
+        ivMonkey = findViewById(R.id.ivMonkey)
+        ivRaccoon = findViewById(R.id.ivRaccoon)
+        ivKoala = findViewById(R.id.ivKoala)
+        ivX2 = findViewById(R.id.ivX2)
+        ivX3 = findViewById(R.id.ivX3)
+        ivBackground1 = findViewById(R.id.ivBackground1)
+        ivBackground2 = findViewById(R.id.ivBackground2)
+        ivBackground3 = findViewById(R.id.ivBackground3)
+
+        tvMonkey = findViewById(R.id.tvMonkey)
+        tvRaccoon = findViewById(R.id.tvRaccoon)
+        tvKoala = findViewById(R.id.tvKoala)
+        tvX2 = findViewById(R.id.tvX2)
+        tvX3 = findViewById(R.id.tvX3)
+        tvBackground1 = findViewById(R.id.tvBackground1)
+        tvBackground2 = findViewById(R.id.tvBackground2)
+        tvBackground3 = findViewById(R.id.tvBackground3)
+
+        btBuy = findViewById(R.id.btBuy)
+    }
+
+    private fun initListeners() {
         ivMonkey.setOnClickListener { handleSelection(ivMonkey) }
         ivRaccoon.setOnClickListener { handleSelection(ivRaccoon) }
         ivKoala.setOnClickListener { handleSelection(ivKoala) }
@@ -44,7 +91,6 @@ class ShopActivity : AppCompatActivity() {
         ivBackground2.setOnClickListener { handleSelection(ivBackground2) }
         ivBackground3.setOnClickListener { handleSelection(ivBackground3) }
 
-        val btBuy = findViewById<Button>(R.id.btBuy)
         btBuy.setOnClickListener { handlePurchase() }
     }
 

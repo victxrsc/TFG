@@ -40,20 +40,17 @@ class WelcomeActivity : ComponentActivity() {
         btPlay = findViewById(R.id.btAccept)
         btLogOut = findViewById(R.id.btLogOut)
 
-        // Setup
         val bundle = intent.extras
         val email = bundle?.getString("email")
         val provider = bundle?.getString("provider")
 
         setup(email ?: "", provider ?: "")
 
-        // Data Storing
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
         prefs.putString("email", email)
         prefs.putString("provider", provider)
         prefs.apply()
 
-        // Database Storing
         val userEmail = FirebaseAuth.getInstance().currentUser?.email
 
         userEmail?.let { email ->

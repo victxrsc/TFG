@@ -30,19 +30,12 @@ class OptionsActivity : AppCompatActivity() {
         btScoreboards = findViewById(R.id.btScoreboards)
         btApply = findViewById(R.id.btApply)
 
-        // Establecer el TextView predeterminado seleccionado
         handleSelection(tv15Segs)
 
-        // Definir el OnClickListener para tv5Segs
         tv5Segs.setOnClickListener { handleSelection(tv5Segs) }
-
-        // Definir el OnClickListener para tv10Segs
         tv10Segs.setOnClickListener { handleSelection(tv10Segs) }
-
-        // Definir el OnClickListener para tv15Segs
         tv15Segs.setOnClickListener { handleSelection(tv15Segs) }
 
-        // Definir el OnClickListener para btApply
         btApply.setOnClickListener {
             val intent = Intent(this, ClickerActivity::class.java)
             val selectedTimer = when (selectedTextView) {
@@ -61,17 +54,14 @@ class OptionsActivity : AppCompatActivity() {
     }
 
     private fun handleSelection(textView: TextView) {
-        // Restaurar tamaño original del TextView previamente seleccionado
         selectedTextView?.apply {
             scaleX = originalScale
             scaleY = originalScale
         }
 
-        // Agrandar el TextView seleccionado
         textView.scaleX = selectedScale
         textView.scaleY = selectedScale
 
-        // Guardar el TextView seleccionado
         selectedTextView = textView
     }
 }

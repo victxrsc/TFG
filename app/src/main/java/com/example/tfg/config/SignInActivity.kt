@@ -42,7 +42,6 @@ class SignInActivity : ComponentActivity() {
         btGoogle = findViewById(R.id.btGoogle)
 
 
-        //Setup
         setup()
         session()
 
